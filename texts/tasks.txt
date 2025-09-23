@@ -1,0 +1,10 @@
+1 - Nome: leitura
+Descrição: terminar de ler o livro hoje
+Data/Hora: 23/09/2025 11:04:32
+Prazo: 23/09/25
+
+2 - Nome: bike
+Descrição: levar pra oficina, pneu furou dnv :(
+Data/Hora: 23/09/2025 11:10:33
+Prazo: 0
+
