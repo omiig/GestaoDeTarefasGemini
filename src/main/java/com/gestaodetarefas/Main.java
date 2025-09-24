@@ -11,7 +11,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         List<Tasks> list = new ArrayList<>();
         Menu menu = new Menu();
-        GeminiService gemini = new GeminiService(System.getenv("GOOGLE_API_KEY"));
+        GeminiService gemini = new GeminiService();
         boolean running = true;
 
         System.out.println("================================");
@@ -71,43 +71,69 @@ public class Main {
                             } else {
                                 System.out.println("Prazo: " + taskLoop.getPrazo());
                             }
-
                             System.out.println();
                         }
                     }
                     continue;
 
                 case 2:
-                    System.out.println("Gostaria de usar o Gemini?");
+                    System.out.print("Gostaria de usar o Gemini? ");
                     String useAI = scanner.nextLine();
 
                     if (useAI.equalsIgnoreCase("sim")) {
-                        System.out.print("Digite um prompt para gerar tarefas automáticas: ");
+                        System.out.print("\nDigite um prompt para gerar tarefas automáticas, aperte ENTER e aguarde: ");
                         String prompt = scanner.nextLine();
+                        System.out.println();
 
-                        String resposta = gemini.gerarTarefa("Gere uma lista de tarefas no formato:\\n\" +\n" +
-                                "    \"1 - Nome: ...\\nDescrição: ...\\n" +
-                                "Data/Hora: dd/MM/yyyy HH:mm:ss\\n\\n\" +\n" +
-                                "Prazo: dd/MM/yyyy" +
-                                "    \"Baseado no seguinte pedido: \"" + prompt);
+                        String suggestedTaskList = gemini.suggestTaskList(prompt);
+                        System.out.println(suggestedTaskList);
 
-                        System.out.println("Gemini sugeriu:\n" + resposta);
+                        System.out.println("""
+                                Digite S para adicionar a sugestão em sua lista
+                                Digite N para não adicionar a sugestão em sua lista
+                                Digite G para gerar uma nova sugestão
+                                """);
+
+                        String resp = scanner.nextLine();
+
+//                        while (!resp.equalsIgnoreCase("S")) {
+//                            if (resp.equalsIgnoreCase("S")) {
+//                                for (Tasks loop : list) {
+//                                    Tasks task = new Tasks();
+//
+//                                    task.setName(gemini.geminiResponse("Me diga o nome da tarefa que você me deu "));
+//                                }
+//
+//
+//
+//
+//                            } else if (resp.equalsIgnoreCase("N")) {
+//
+//                            } else if (resp.equalsIgnoreCase("G")) {
+//                                suggestedTaskList = gemini.suggestTaskList(prompt);
+//                                System.out.println(suggestedTaskList);
+//                            } else {
+//                                System.out.println("Operação não reconhecida!");
+//                            }
+//                        }
+                    } else {
+                        Tasks task = new Tasks();
+
+                        System.out.print("Nome da tarefa: ");
+                        task.setName(scanner.nextLine());
+
+                        System.out.print("\nDescrição da tarefa: ");
+                        task.setDescription(scanner.nextLine());
+
+                        System.out.print("\nPrazo da tarefa ou 0 para deixar sem prazo: ");
+                        task.setPrazo(scanner.nextLine());
+
+                        list.add(task);
+
+                        System.out.println("Tarefa adicionada com sucesso!");
                     }
 
-                    Tasks task = new Tasks();
 
-                    System.out.print("Nome da tarefa: ");
-                    task.setName(scanner.nextLine());
-
-                    System.out.print("\nDescrição da tarefa: ");
-                    task.setDescription(scanner.nextLine());
-
-                    System.out.print("\nPrazo da tarefa ou 0 para deixar sem prazo: ");
-                    task.setPrazo(scanner.nextLine());
-
-                    list.add(task);
-
-                    System.out.println("Tarefa adicionada com sucesso!");
                     continue;
 
                 case 3:

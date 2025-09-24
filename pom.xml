@@ -19,7 +19,6 @@
             <artifactId>google-genai</artifactId>
             <version>1.17.0</version>
         </dependency>
-
     </dependencies>
 
 
