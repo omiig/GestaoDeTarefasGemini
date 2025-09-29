@@ -1,5 +1,50 @@
-1 - Nome: leitura
-Descrição: jajssha
-Data/Hora: 24/09/2025 08:54:29
-Prazo: Sem Prazo Definido
+1 - Nome: Preparar para o Curso
+Descrição: Organizar materiais, lanche e mochila para o curso da manhã às 8h de segunda a sexta.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 01/10/2025
+
+2 - Nome: Rotina Matinal Eficaz
+Descrição: Acordar com antecedência (ex: 7h), fazer higiene pessoal e tomar um café da manhã nutritivo antes do curso.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 02/10/2025
+
+3 - Nome: Planejar Revisão
+Descrição: Elaborar um guia detalhado ou um checklist para orientar o processo de revisão, incluindo etapas, critérios de avaliação e ferramentas sugeridas.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 06/10/2025
+
+4 - Nome: Almoço e Pequeno Descanso
+Descrição: Preparar e almoçar uma refeição saudável. Aproveitar 15-30 minutos para um breve descanso ou meditação.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 04/10/2025
+
+5 - Nome: Preparar para a Academia
+Descrição: Separar roupa de treino, garrafa de água e lanche pré-treino para a sessão na academia por volta das 16h.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 05/10/2025
+
+6 - Nome: Treino de Academia
+Descrição: Realizar o treino planejado na academia, mantendo o foco e a intensidade.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 06/10/2025
+
+7 - Nome: Pós-Academia e Refeição
+Descrição: Hidratar-se bem, tomar um banho e fazer um lanche ou refeição pós-treino nutritiva.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 07/10/2025
+
+8 - Nome: Preparar para o Vôlei
+Descrição: Organizar uniforme, calçados e garrafa de água para o treino de vôlei às 20h.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 08/10/2025
+
+9 - Nome: Treino de Vôlei
+Descrição: Participar ativamente do treino de vôlei, focando na diversão e no aprimoramento das habilidades.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 09/10/2025
+
+10 - Nome: Rotina Noturna e Planejamento
+Descrição: Relaxar, dedicar 10 minutos para planejar as 3 tarefas mais importantes do dia seguinte e garantir um bom descanso.
+Data/Hora: 29/09/2025 10:37:12
+Prazo: 10/10/2025
 

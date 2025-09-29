@@ -1,6 +1,7 @@
 package com.gestaodetarefas;
 
 import com.gestaodetarefas.gemini.GeminiService;
+import com.gestaodetarefas.gemini.TaskParser;
 import com.gestaodetarefas.tasks.Tasks;
 
 import java.io.*;
@@ -12,6 +13,7 @@ public class Main {
         List<Tasks> list = new ArrayList<>();
         Menu menu = new Menu();
         GeminiService gemini = new GeminiService();
+        String useAI = "";
         boolean running = true;
 
         System.out.println("================================");
@@ -78,7 +80,7 @@ public class Main {
 
                 case 2:
                     System.out.print("Gostaria de usar o Gemini? ");
-                    String useAI = scanner.nextLine();
+                    useAI = scanner.nextLine();
 
                     if (useAI.equalsIgnoreCase("sim")) {
                         System.out.print("\nDigite um prompt para gerar tarefas automáticas, aperte ENTER e aguarde: ");
@@ -88,34 +90,42 @@ public class Main {
                         String suggestedTaskList = gemini.suggestTaskList(prompt);
                         System.out.println(suggestedTaskList);
 
-                        System.out.println("""
+                        String resp = "";
+
+                        while (true) {
+                            System.out.println("""
                                 Digite S para adicionar a sugestão em sua lista
                                 Digite N para não adicionar a sugestão em sua lista
                                 Digite G para gerar uma nova sugestão
                                 """);
 
-                        String resp = scanner.nextLine();
+                            resp = scanner.nextLine();
 
-//                        while (!resp.equalsIgnoreCase("S")) {
-//                            if (resp.equalsIgnoreCase("S")) {
-//                                for (Tasks loop : list) {
-//                                    Tasks task = new Tasks();
-//
-//                                    task.setName(gemini.geminiResponse("Me diga o nome da tarefa que você me deu "));
-//                                }
-//
-//
-//
-//
-//                            } else if (resp.equalsIgnoreCase("N")) {
-//
-//                            } else if (resp.equalsIgnoreCase("G")) {
-//                                suggestedTaskList = gemini.suggestTaskList(prompt);
-//                                System.out.println(suggestedTaskList);
-//                            } else {
-//                                System.out.println("Operação não reconhecida!");
-//                            }
-//                        }
+                            if (resp.equalsIgnoreCase("S")) {
+                               List <Tasks> geminiList = TaskParser.parseTasks(suggestedTaskList);
+                               list.addAll(geminiList);
+                                System.out.println("Lista sugerida adicionada com sucesso!");
+                                break;
+
+                            } else if (resp.equalsIgnoreCase("N")) {
+                                System.out.println("Voltando a aplicação!");
+                                break;
+                            } else if (resp.equalsIgnoreCase("G")) {
+                                System.out.print("Digite outro prompt caso queira: ");
+                                String resp2 = scanner.nextLine();
+
+                                if (resp2.isEmpty()) {
+                                    suggestedTaskList = gemini.suggestTaskList(prompt);
+                                } else {
+                                    prompt += resp2;
+                                    suggestedTaskList = gemini.suggestTaskList(prompt);
+                                }
+
+                                System.out.println(suggestedTaskList);
+                            } else {
+                                System.out.println("Operação não reconhecida!");
+                            }
+                        }
                     } else {
                         Tasks task = new Tasks();
 
@@ -132,8 +142,6 @@ public class Main {
 
                         System.out.println("Tarefa adicionada com sucesso!");
                     }
-
-
                     continue;
 
                 case 3:
@@ -205,29 +213,54 @@ public class Main {
                         System.out.print(taskFind.getId() + " - ");
                         System.out.println("Nome: " + taskFind.getName());
                         System.out.println("Descrição: " + taskFind.getDescription());
-
                         if (taskFind.getPrazo().equals("0")) {
                             System.out.println("Prazo: Sem Prazo Definido");
                         } else {
                             System.out.println("Prazo: " + taskFind.getPrazo());
                         }
-
                         System.out.println();
 
-                        System.out.println("Você quer editar essa tarefa? ");
+                        System.out.print("Você quer editar essa tarefa? ");
                         String resp2 = scanner.nextLine();
 
                         if (resp2.equalsIgnoreCase("sim")) {
-                            System.out.print("Nome da tarefa: ");
-                            taskFind.setName(scanner.nextLine());
+                            System.out.print("Gostaria de usar o Gemini? ");
+                            useAI = scanner.nextLine();
 
-                            System.out.print("\nDescrição da tarefa: ");
-                            taskFind.setDescription(scanner.nextLine());
+                            if (useAI.equalsIgnoreCase("sim")) {
+                                System.out.print("\nDigite um prompt sobre como você deseja editar essa tarefa, aperte ENTER e aguarde: ");
+                                String prompt = scanner.nextLine();
+                                String geminiEditedTask = gemini.editTask(prompt, taskFind);
+                                System.out.println(geminiEditedTask);
 
-                            System.out.print("\nPrazo: ");
-                            taskFind.setPrazo(scanner.nextLine());
+                                System.out.println("""
+                                        Digite S para confirmar a edição a sugestão em sua lista
+                                        Digite N para não confirmar a edição a sugestão em sua lista
+                                        """);
 
-                            System.out.println("Tarefa editada com sucesso!");
+                                String resp3 = scanner.nextLine();
+                                if (resp3.equalsIgnoreCase("s")) {
+                                    Tasks geminiEdited = TaskParser.parseEditTask(geminiEditedTask);
+                                    taskFind.setName(geminiEdited.getName());
+                                    taskFind.setDescription(geminiEdited.getDescription());
+                                    taskFind.setPrazo(geminiEdited.getPrazo());
+                                    System.out.println("Tarefa editada com sucesso!");
+                                } else {
+                                    System.out.println("Voltando a aplicação!");
+                                }
+
+                            } else {
+                                System.out.print("Nome da tarefa: ");
+                                taskFind.setName(scanner.nextLine());
+
+                                System.out.print("\nDescrição da tarefa: ");
+                                taskFind.setDescription(scanner.nextLine());
+
+                                System.out.print("\nPrazo: ");
+                                taskFind.setPrazo(scanner.nextLine());
+
+                                System.out.println("Tarefa editada com sucesso!");
+                            }
                         } else {
                             System.out.println("Voltando para aplicação");
                         }
