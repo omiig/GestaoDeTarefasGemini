@@ -63,4 +63,12 @@ public class Tasks {
     public String getPrazo() {
         return prazo;
     }
+
+    @Override
+    public String toString() {
+        return "Nome: " + name + "\n" +
+                "Descrição: " + description + "\n" +
+                "Data/Hora: " + dthr + "\n" +
+                "Prazo: " + prazo;
+    }
 }

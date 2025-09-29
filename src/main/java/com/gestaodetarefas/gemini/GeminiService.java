@@ -27,24 +27,45 @@ public class GeminiService {
     }
 
     public String suggestTaskList(String prompt) {
-        return geminiResponse("Gere uma lista de tarefas no formato:" + "\n" +
-                "1 - Nome: ... " + "\n" +
-                "Descrição: ..." + "\n" +
-                "Data/Hora: " + dthr + "\n" +
-                "Prazo: dd/MM/yyyy (a partir da dthr acima)" + "\n\n" +
-                "Cada linha e cada tarefa separado por um enter, me responda somente com a lista do jeito que eu pedi baseado no seguinte pedido: " + prompt +
-                "Se o usuário pedir ou perguntar qualquer coisa que não seja uma lista de tarefas para você sugerir responda apenas # Não posso ajudá-lo com isso, fui programado apenas para sugerir e editar listas de tarefas! #" +
-                "Desconsidere frases aleatórias que não seja pedidos para fazer uma lista sobre determinada coisa, se o usuário fizer isso somente responda # Não posso ajudá-lo com isso, fui programado apenas para sugerir e editar listas de tarefas! #");
+        return geminiResponse(
+                "Você é um assistente de gestão de tarefas. " +
+                        "Sua função é EXCLUSIVAMENTE sugerir listas de tarefas. " +
+                        "Se o usuário pedir qualquer coisa que não seja para criar uma lista de tarefas, " +
+                        "responda apenas exatamente com: '# Não posso ajudá-lo com isso, fui programado apenas para sugerir e editar listas de tarefas! #'.\n\n" +
+
+                        "Formato obrigatório da resposta (sem explicações, apenas a lista):\n" +
+                        "1 - Nome: ...\n" +
+                        "Descrição: ...\n" +
+                        "Data/Hora: " + dthr + "\n" +
+                        "Prazo: dd/MM/yyyy (a partir da dthr acima)\n\n" +
+
+                        "Cada tarefa deve ser separada por uma linha em branco.\n\n" +
+
+                        "Pedido do usuário: " + prompt
+        );
     }
 
     public String editTask (String prompt, Tasks task) {
-        return geminiResponse("Pegue essa tarefa aqui como base " + task + "\n"+
-                "O usuário deve pedir para editar essa tarefa, edite exatamente como o usuário pedir nesse formato: " + "\n" +
-                "1 - Nome: ... " + "\n" +
-                "Descrição: ... " + "\n" +
-                "Data/Hora: " + dthr + "\n" +
-                "Prazo: dd/MM/yyyy (a partir da dthr acima)" + "\n\n" +
-                "Cada linha por um enter, me responda somente com a tarefa do jeito que eu pedi baseado no seguinte pedido: " + prompt +
-                "Se o usuário pedir ou perguntar qualquer coisa que não seja sobre editar essa tarefa responda apenas # Não posso ajudá-lo com isso, fui programado apenas para sugerir e editar listas de tarefas! #");
+        return geminiResponse(
+                "Você é um assistente de gestão de tarefas. " +
+                        "Sua função é EXCLUSIVAMENTE editar a tarefa fornecida. " +
+                        "Se o usuário pedir qualquer coisa que não seja sobre editar esta tarefa, " +
+                        "responda apenas exatamente com: '# Não posso ajudá-lo com isso, fui programado apenas para sugerir e editar listas de tarefas! #'.\n\n" +
+
+                        "Aqui está a tarefa atual:\n" +
+                        "Nome: " + task.getName() + "\n" +
+                        "Descrição: " + task.getDescription() + "\n" +
+                        "Data/Hora: " + task.getDthr() + "\n" +
+                        "Prazo: " + task.getPrazo() + "\n\n" +
+
+                        "Edite a tarefa conforme o pedido do usuário, mantendo o formato:\n" +
+                        "1 - Nome: ...\n" +
+                        "Descrição: ...\n" +
+                        "Data/Hora: " + dthr + "\n" +
+                        "Prazo: dd/MM/yyyy (a partir da dthr acima)\n\n" +
+
+                        "Pedido do usuário: " + prompt
+        );
+
     }
 }
